@@ -1,3 +1,35 @@
+unsigned int getOp(IR ir)
+{
+	return ir.RI.opcode;
+}
+unsigned int getRs(IR ir)
+{
+	return ir.RI.rs;
+}
+unsigned int getRt(IR ir)
+{
+	return ir.RI.rt;
+}
+unsigned int getRd(IR ir)
+{
+	return ir.RI.rd;
+}
+unsigned int getSh(IR ir)
+{
+	return ir.RI.sh;
+}
+unsigned int getFn(IR ir)
+{
+	return ir.RI.funct;
+}
+unsigned int getOperand(IR ir)
+{
+	return ir.II.operand;
+}
+unsigned int getOffset(IR ir)
+{
+	return ir.JI.address;
+}
 void step(void)
 {
 	if (PC == 0)
