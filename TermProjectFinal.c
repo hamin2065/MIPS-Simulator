@@ -72,7 +72,7 @@ int shiftOperation(int X, int Y, int s1s0) {
 int addSubtract(int X, int Y, int s0) {
     int ret;
     if (s0 < 0 || s0 > 1) {
-        printf("error in addSubtract\n");
+        printf("Error in addSubtract\n");
         exit(1);
     }
     if (s0 == 0) { // add
@@ -101,7 +101,7 @@ int checkZero(int S) {
 
 
 
-// 구하민 - ALU
+//ALU
 int ALU(int X, int Y, int C, int* Z) {
     int s3s2, s1s0;
     int ret;
@@ -134,7 +134,7 @@ int ALU(int X, int Y, int C, int* Z) {
 }
 
 
-
+//MEM
 unsigned char progMEM[0x100000], dataMEM[0x100000], stakMEM[0x100000];
 
 unsigned int MEM(unsigned int A, int V, int nRW, int S)
@@ -201,6 +201,7 @@ unsigned int MEM(unsigned int A, int V, int nRW, int S)
     }
 }
 
+//REG
 unsigned int PC = 0, HI = 0, LO = 0;
 unsigned int R[REG_SIZE];
 
@@ -285,6 +286,7 @@ void load()
     fclose(pFile);
 }
 
+//STEP
 unsigned int getOp(IR ir)
 {
     return ir.RI.opcode;
