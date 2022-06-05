@@ -82,7 +82,7 @@ void load()
 }
 
 int main() {
-	unsigned int BP = 0; //break point
+	unsigned int BP = 0;
 
 	while (1) {
 		char cmd[3];
