@@ -35,7 +35,7 @@ typedef union type {
 
 int logicOperation(int X, int Y, int s1s0) {
     if (s1s0 < 0 || s1s0 > 3) {
-        printf("error in logic\n");
+        printf("Error in logic\n\n");
         exit(1);
     }
     if (s1s0 == 0)
@@ -51,7 +51,7 @@ int logicOperation(int X, int Y, int s1s0) {
 int shiftOperation(int X, int Y, int s1s0) {
     int ret;
     if (s1s0 < 0 || s1s0 > 3) {
-        printf("error in shift");
+        printf("Error in shift\n\n");
         exit(1);
     }
     if (s1s0 == 0) {
@@ -72,7 +72,7 @@ int shiftOperation(int X, int Y, int s1s0) {
 int addSubtract(int X, int Y, int s0) {
     int ret;
     if (s0 < 0 || s0 > 1) {
-        printf("Error in addSubtract\n");
+        printf("Error in addSubtract\n\n");
         exit(1);
     }
     if (s0 == 0) { // add
@@ -201,6 +201,14 @@ unsigned int MEM(unsigned int A, int V, int nRW, int S)
     }
 }
 
+void showMemory(int start, int end) {
+    printf("\n[MEMORY]\n\n");
+    for (unsigned int i = start; i <= end; i += 4)
+                printf("MEM[%x] = %08x\n", i, MEM(i, 0, 0, 2));
+    printf("\n");
+}
+
+
 //REG
 unsigned int PC = 0, HI = 0, LO = 0;
 unsigned int R[REG_SIZE];
@@ -227,11 +235,11 @@ unsigned int REG(unsigned int A, unsigned int V, int nRW)
 
 void showRegister(void) //레지스터 출력
 {
-    printf("[REGISTER]\n");
+    printf("\n[REGISTER]\n\n");
     for (int i = 0; i < REG_SIZE; i++)
         printf("R%d = %x\n", i, REG(i, 0, 0));
     printf("PC: %x\n", PC);
-    printf("HI: %x   LO: %x\n", HI, LO);
+    printf("HI: %x   LO: %x\n\n", HI, LO);
 }
 
 void setPC(unsigned int val) {
@@ -245,14 +253,14 @@ void load()
     unsigned char tmp[1000];
     char str[20] = "";
     unsigned int index = 0, instNum = 0, dataNum = 0;
-    printf("Enter file name: ");
+    printf("> Enter file name: ");
     scanf("%s", &str);
 
     if ((pFile = fopen(str, "rb")) == NULL) {
-        printf("Cannot open file\n");
+        printf("\nCannot open file\n");
         return;
     }
-    printf("Open success!\n");
+    printf("\nOpen success!\n");
     for (int i = 0; fread(&tmp[i], sizeof(tmp), 1, pFile); i++);
     for (; index < 4; index++) {
         instNum = instNum << 8;
@@ -283,6 +291,8 @@ void load()
     }
     setPC(0x400000);
     REG(29, 0x80000000, 1);
+    printf("\nNum of instruction: %d\n", instNum);
+    printf("Num of data: %d\n\n", dataNum);
     fclose(pFile);
 }
 
@@ -492,27 +502,31 @@ int main() {
             setPC(pc);
         }
         else if (cmd[0] == 'g') { //명령어 끝까지 실행
+            printf("\n");
             if (PC == 0 || PC == BP)
                 step();
             while (PC != 0 && PC != BP)
                 step();
+            printf("\n");
         }
         else if (cmd[0] == 's') {
             if (cmd[1] == 'r') { //레지스터 값 설정
-                scanf("%d %x", &num, &value);
+                scanf("%d %x\n", &num, &value);
                 REG(num, value, 1);
             }
             else if (cmd[1] == 'm') { //메모리 값 설정
-                scanf("%x %x", &num, &value);
+                scanf("%x %x\n", &num, &value);
                 MEM(num, value, 1, 2);
             }
-            else //스텝
+            else {//스텝
                 step();
+                printf("\n");
+            }
         }
         else if (cmd[0] == 'm') { //메모리 범위 출력
+            printf("> Enter memory range: ");
             scanf("%x %x", &start, &end);
-            for (unsigned int i = start; i <= end; i += 4)
-                printf("MEM[%x] = %08x\n", i, MEM(i, 0, 0, 2));
+            showMemory(start, end);
         }
         else if (cmd[0] == 'r') { //레지스터 상태 출력
             showRegister();
