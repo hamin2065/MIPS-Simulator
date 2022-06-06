@@ -498,6 +498,7 @@ int main() {
             load();
         }
         else if (cmd[0] == 'j') { //PC 설정
+            printf("> Enter PC number: ");
             scanf("%x", &pc);
             setPC(pc);
         }
@@ -511,10 +512,12 @@ int main() {
         }
         else if (cmd[0] == 's') {
             if (cmd[1] == 'r') { //레지스터 값 설정
+                printf("> Enter register number and value: ");
                 scanf("%d %x\n", &num, &value);
                 REG(num, value, 1);
             }
             else if (cmd[1] == 'm') { //메모리 값 설정
+                printf("> Enter memory number and value: ");
                 scanf("%x %x\n", &num, &value);
                 MEM(num, value, 1, 2);
             }
@@ -532,6 +535,7 @@ int main() {
             showRegister();
         }
         else if (cmd[0] == 'b') { //브레이크 포인트 설정
+            printf("> Enter breakpoint memory address: ");
             scanf("%x", &pc);
             BP = pc;
         }
