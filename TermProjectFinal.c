@@ -368,7 +368,7 @@ void step(void)
 
     else if (op == 010) {
         printf("addi $%d, $%d, %d", inst.II.rt, inst.II.rs, (short)inst.II.operand);
-        REG(rt, ALU(REG(rs, 0, 0), (short)operand, 0x8, &Z), 1);
+        REG(rt, ALU(REG(rs, 0, 0), (short)operand, 0x9, &Z), 1);
     }
     else if (op == 012) {
         printf("slti $%d, $%d, %d", inst.II.rt, inst.II.rs, (short)inst.II.operand);
